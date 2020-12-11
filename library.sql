@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.29, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: library
 -- ------------------------------------------------------
--- Server version	5.7.31-log
+-- Server version	5.7.29
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -186,15 +186,13 @@ DROP TABLE IF EXISTS `lostitem`;
 CREATE TABLE `lostitem` (
   `lostItemID` int(11) NOT NULL AUTO_INCREMENT,
   `cardNO` varchar(10) NOT NULL,
-  `publicationID` int(11) NOT NULL,
   `borrowItemID` int(11) NOT NULL,
   `lostDate` datetime NOT NULL,
   PRIMARY KEY (`lostItemID`),
   KEY `lostitem_borrowitem_borrowItemID_fk` (`borrowItemID`),
   KEY `lostitem_card_cardNO_fk` (`cardNO`),
   CONSTRAINT `lostitem_borrowitem_borrowItemID_fk` FOREIGN KEY (`borrowItemID`) REFERENCES `borrowitem` (`borrowItemID`),
-  CONSTRAINT `lostitem_card_cardNO_fk` FOREIGN KEY (`cardNO`) REFERENCES `card` (`cardNO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `lostitem_publication_publicationID_fk` FOREIGN KEY (`lostItemID`) REFERENCES `publication` (`publicationID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `lostitem_card_cardNO_fk` FOREIGN KEY (`cardNO`) REFERENCES `card` (`cardNO`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -246,17 +244,14 @@ DROP TABLE IF EXISTS `overtimeitem`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `overtimeitem` (
   `overTimeItemID` int(11) NOT NULL AUTO_INCREMENT,
-  `publicationID` int(11) NOT NULL,
   `borrowItemID` int(11) NOT NULL,
   `cardNO` varchar(10) NOT NULL,
   `dueDate` datetime NOT NULL,
   PRIMARY KEY (`overTimeItemID`),
   KEY `OverTimeItem_borrowitem_borrowItemID_fk` (`borrowItemID`),
   KEY `OverTimeItem_card_cardNO_fk` (`cardNO`),
-  KEY `OverTimeItem_publication_publicationID_fk` (`publicationID`),
   CONSTRAINT `OverTimeItem_borrowitem_borrowItemID_fk` FOREIGN KEY (`borrowItemID`) REFERENCES `borrowitem` (`borrowItemID`),
-  CONSTRAINT `OverTimeItem_card_cardNO_fk` FOREIGN KEY (`cardNO`) REFERENCES `card` (`cardNO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `OverTimeItem_publication_publicationID_fk` FOREIGN KEY (`publicationID`) REFERENCES `publication` (`publicationID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `OverTimeItem_card_cardNO_fk` FOREIGN KEY (`cardNO`) REFERENCES `card` (`cardNO`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -332,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-10 22:31:00
+-- Dump completed on 2020-12-11 11:35:41
