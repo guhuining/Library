@@ -1,13 +1,14 @@
 package main
 
 import (
-	"library/config"
+	"library/tools"
 	"net/http"
 )
 
 func main() {
+	serverConfig := tools.ServerConfig()
 	server := http.Server{
-		Addr: config.IP + ":" + config.PORT,
+		Addr: serverConfig.Host + ":" + serverConfig.Port,
 	}
 
 	server.ListenAndServe()
