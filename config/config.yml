@@ -2,8 +2,8 @@ server:
   host: 127.0.0.1
   port: 8080
 database:
-  username: root
+  user_name: root
   password: Huining_0927
   host: 127.0.0.1
   port: 3306
-  dbname: Library
+  db_name: Library
