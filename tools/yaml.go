@@ -10,7 +10,7 @@ func ServerConfig() config.Server {
 	// 返回服务器相关配置
 	var server config.Server
 	//读取配置文件
-	serverConfig, err := ioutil.ReadFile("../config/config.yml")
+	serverConfig, err := ioutil.ReadFile("config/config.yml")
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +25,7 @@ func SqlConfig() config.Sql {
 	// 返回数据库相关配置
 	var sql config.Sql
 	//读取配置文件
-	sqlConfig, err := ioutil.ReadFile("../config/config.yml")
+	sqlConfig, err := ioutil.ReadFile("config/config.yml")
 	if err != nil {
 		panic(err)
 	}
