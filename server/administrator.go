@@ -25,3 +25,33 @@ func CreateAdministrator(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(tools.ApiReturn(0, "添加成功", nil))
 }
+
+// @title		LoginAdministrator
+// @description	系统管理员登陆
+// @param		w	http.ResponseWriter
+// @param		r	*http.Request
+func LoginAdministrator(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	var administrator = &data.Administrator{UserName: postData["UserName"].(string)}
+	err = administrator.RetrieveByUserName()
+	// 如果登录成功，设置session
+	if administrator.Password == postData["Password"].(string) {
+		session, _ := store.Get(r, "library")
+		session.Values["AdministratorID"] = administrator.AdministratorID
+		session.Values["UserName"] = administrator.UserName
+		err = session.Save(r, w)
+
+		if err != nil { // session写入失败，登陆失败
+			w.Write(tools.ApiReturn(1, "登录失败", nil))
+			return
+		}
+		w.Write(tools.ApiReturn(0, "登录成功", nil))
+		return
+	} else {
+		w.Write(tools.ApiReturn(1, "密码错误", nil))
+		return
+	}
+}
