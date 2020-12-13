@@ -15,7 +15,11 @@ func CreateAdministrator(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	// TODO 写好登录后添加鉴权
+	session, _ := store.Get(r, "library")
+	if session.Values["roll"] != "administrator" {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
 	var administrator = &data.Administrator{UserName: postData["UserName"].(string), Password: postData["Password"].(string)}
 	err = administrator.Create() // 添加系统管理员
 	if err != nil {
