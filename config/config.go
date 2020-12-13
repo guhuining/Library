@@ -19,7 +19,7 @@ type Sql struct {
 }
 
 // 返回服务器相关配置
-func (server *Server) ServerConfig() {
+func (server *Server) Get() {
 	serverConfig, err := ioutil.ReadFile("config.yml") //读取配置文件
 	if err != nil {
 		panic(err)
@@ -31,8 +31,7 @@ func (server *Server) ServerConfig() {
 }
 
 // 返回数据库相关配置
-func (sql *Sql) SqlConfig() {
-
+func (sql *Sql) Get() {
 	sqlConfig, err := ioutil.ReadFile("config.yml") //读取配置文件
 	if err != nil {
 		panic(err)
