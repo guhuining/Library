@@ -2,6 +2,7 @@ package main
 
 import (
 	"library/config"
+	controller "library/server"
 	"net/http"
 )
 
@@ -11,6 +12,8 @@ func main() {
 	server := http.Server{
 		Addr: serverConfig.Host + ":" + serverConfig.Port,
 	}
+
+	http.HandleFunc("/api/create_administrator", controller.CreateAdministrator)
 
 	server.ListenAndServe()
 }
