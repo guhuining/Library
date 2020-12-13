@@ -42,6 +42,7 @@ func LoginAdministrator(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "library")
 		session.Values["AdministratorID"] = administrator.AdministratorID
 		session.Values["UserName"] = administrator.UserName
+		session.Values["Roll"] = "administrator" // 设置权限
 		err = session.Save(r, w)
 
 		if err != nil { // session写入失败，登陆失败
