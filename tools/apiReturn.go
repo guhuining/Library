@@ -8,7 +8,7 @@ import "encoding/json"
 // @param	msg			string					"说明信息"
 // @param	data		map[string]interface{}	"需要传输的数据"
 // @return	jsonString	[]byte					"编码后的json字节slice"
-func apiReturn(code int, msg string, data *map[string]interface{}) []byte {
+func ApiReturn(code int, msg string, data *map[string]interface{}) []byte {
 	var jsonMap = map[string]interface{}{}
 	if data == nil {
 		jsonMap["code"] = code
