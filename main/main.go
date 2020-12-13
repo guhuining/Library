@@ -1,12 +1,13 @@
 package main
 
 import (
-	"library/tools"
+	"library/config"
 	"net/http"
 )
 
 func main() {
-	serverConfig := tools.ServerConfig()
+	c := &config.Config{}
+	serverConfig := c.GetServer()
 	server := http.Server{
 		Addr: serverConfig.Host + ":" + serverConfig.Port,
 	}
