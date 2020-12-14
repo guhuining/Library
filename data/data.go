@@ -56,18 +56,18 @@ type Publication struct {
 	Price           int64           `json:"price"`
 	Total           int64           `json:"total"`
 	Inventory       int64           `json:"inventory"`
-	PublicationFine PublicationType `json:"publication_fine"`
+	PublicationType PublicationType `json:"publication_fine"`
 	Author          string          `json:"author"`
 }
 
 type BorrowItem struct {
 	// 借书信息
-	BorrowItemID int64           `json:"borrow_item_id"`
-	Card         Card            `json:"card"`
-	Publication  PublicationType `json:"publication"`
-	BorrowDate   time.Time       `json:"borrow_date"`
-	DueDate      time.Time       `json:"due_date"`
-	Status       int64           `json:"status"`
+	BorrowItemID int64       `json:"borrow_item_id"`
+	Card         Card        `json:"card"`
+	Publication  Publication `json:"publication"`
+	BorrowDate   time.Time   `json:"borrow_date"`
+	DueDate      time.Time   `json:"due_date"`
+	Status       int64       `json:"status"`
 }
 
 type LostItem struct {
