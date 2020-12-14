@@ -24,10 +24,9 @@ func CreateAdministrator(w http.ResponseWriter, r *http.Request) {
 	err = administrator.Create() // 添加系统管理员
 	if err != nil {
 		w.Write(tools.ApiReturn(1, "添加失败", nil))
-		print(err.Error())
-		return
+	} else {
+		w.Write(tools.ApiReturn(0, "添加成功", nil))
 	}
-	w.Write(tools.ApiReturn(0, "添加成功", nil))
 }
 
 // @title		LoginAdministrator
