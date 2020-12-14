@@ -35,4 +35,4 @@
 |/api/login_librarian|图书管理员登录|"UserName"<br/>"Password"|null|
 |/api/create_borrower|借阅者注册|"UserName"<br/>"Password"|null|
 |/api/login_librarian|借阅者登录|"UserName"<br/>"Password"|null|
-
+|/api/add_publication_type|添加出版物类型|"PublicationType" ```出版物类别```<br/>"Fine" ```超期罚款```|null|
