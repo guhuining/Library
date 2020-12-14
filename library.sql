@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.31, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: library
 -- ------------------------------------------------------
--- Server version	5.7.29
+-- Server version	5.7.31-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `administrator` (
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`administratorID`),
   UNIQUE KEY `Administrator_username_uindex` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统管理员';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `administrator` (
 
 LOCK TABLES `administrator` WRITE;
 /*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
+INSERT INTO `administrator` VALUES (1,'huining','gu20000927');
 /*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,8 +282,8 @@ CREATE TABLE `publication` (
   `publicationType` varchar(10) NOT NULL,
   `author` varchar(10) NOT NULL,
   PRIMARY KEY (`publicationID`),
-  KEY `publication_publicationfine_publicationType_fk` (`publicationType`),
-  CONSTRAINT `publication_publicationfine_publicationType_fk` FOREIGN KEY (`publicationType`) REFERENCES `publicationfine` (`publicationType`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `publication_publicationtype_publicationType_fk` (`publicationType`),
+  CONSTRAINT `publication_publicationtype_publicationType_fk` FOREIGN KEY (`publicationType`) REFERENCES `publicationtype` (`publicationType`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -296,13 +297,13 @@ LOCK TABLES `publication` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `publicationfine`
+-- Table structure for table `publicationtype`
 --
 
-DROP TABLE IF EXISTS `publicationfine`;
+DROP TABLE IF EXISTS `publicationtype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `publicationfine` (
+CREATE TABLE `publicationtype` (
   `publicationType` varchar(10) NOT NULL,
   `fine` int(11) NOT NULL,
   PRIMARY KEY (`publicationType`)
@@ -310,12 +311,12 @@ CREATE TABLE `publicationfine` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `publicationfine`
+-- Dumping data for table `publicationtype`
 --
 
-LOCK TABLES `publicationfine` WRITE;
-/*!40000 ALTER TABLE `publicationfine` DISABLE KEYS */;
-/*!40000 ALTER TABLE `publicationfine` ENABLE KEYS */;
+LOCK TABLES `publicationtype` WRITE;
+/*!40000 ALTER TABLE `publicationtype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `publicationtype` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -327,4 +328,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-11 11:35:41
+-- Dump completed on 2020-12-14 17:16:06
