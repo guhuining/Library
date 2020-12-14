@@ -21,6 +21,7 @@
 |:------:|:------:|:-----:|:-----:|
 |/api/create_administrator|新增系统管理员|"UserName"<br/>"Password"|null
 |/api/login_administrator|系统管理员登陆|"UserName"<br>"Password"|null
-|/api/create_administrator|新增图书管理员|"UserName"<br/>"Password"|null
+|/api/create_librarian|新增图书管理员|"UserName"<br/>"Password"|null
+|/api/login_librarian|图书管理员登录|"UserName"<br/>"Password"|null
 
 
