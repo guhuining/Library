@@ -28,7 +28,7 @@ CREATE TABLE `administrator` (
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`administratorID`),
   UNIQUE KEY `Administrator_username_uindex` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='系统管理员';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `administrator` (
 
 LOCK TABLES `administrator` WRITE;
 /*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
-INSERT INTO `administrator` VALUES (1,'huining','gu20000927');
+INSERT INTO `administrator` VALUES (1,'huining','gu20000927'),(2,'Test','asdfasdf');
 /*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,13 +274,13 @@ DROP TABLE IF EXISTS `publication`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `publication` (
   `publicationID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(10) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `ISBN` varchar(20) NOT NULL,
   `price` int(11) NOT NULL,
   `total` int(11) NOT NULL DEFAULT '0',
   `inventory` int(11) NOT NULL DEFAULT '0',
   `publicationType` varchar(10) NOT NULL,
-  `author` varchar(10) NOT NULL,
+  `author` varchar(64) NOT NULL,
   PRIMARY KEY (`publicationID`),
   KEY `publication_publicationtype_publicationType_fk` (`publicationType`),
   CONSTRAINT `publication_publicationtype_publicationType_fk` FOREIGN KEY (`publicationType`) REFERENCES `publicationtype` (`publicationType`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -316,6 +316,7 @@ CREATE TABLE `publicationtype` (
 
 LOCK TABLES `publicationtype` WRITE;
 /*!40000 ALTER TABLE `publicationtype` DISABLE KEYS */;
+INSERT INTO `publicationtype` VALUES ('图书',15),('杂志',10);
 /*!40000 ALTER TABLE `publicationtype` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -328,4 +329,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-14 17:16:06
+-- Dump completed on 2020-12-14 21:35:55
