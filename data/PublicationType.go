@@ -10,3 +10,13 @@ func (publicationType *PublicationType) Insert() (err error) {
 	_, err = Db.Query(statement, publicationType.PublicationType, publicationType.Fine)
 	return
 }
+
+// @title	PublicationType.Delete
+// @description	删除出版类型
+// @param	publicationType	PublicationType.PublicationType	出版物类型
+// @return	err				error							错误信息
+func (publicationType *PublicationType) Delete() (err error) {
+	statement := `DELETE FROM PublicationType WHERE publicationType = ?`
+	_, err = Db.Query(statement, publicationType.PublicationType)
+	return
+}

@@ -39,3 +39,33 @@ func AddPublicationType(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "添加成功", nil))
 	}
 }
+
+// @title	DeletePublicationType
+// @description	删除出版物类型
+// @param	w	http.ResponseWriter
+// @param	r	*http.Request
+func DeletePublicationType(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	// 鉴权
+	session, err := store.Get(r, "library")
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	}
+	if session.Values["Roll"] != "Administrator" {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	publicationType := &data.PublicationType{
+		PublicationType: postData["PublicationType"].(string),
+	}
+	err = publicationType.Delete()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "删除成功", nil))
+	}
+}
