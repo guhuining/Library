@@ -17,6 +17,13 @@
 
 * msg为消息提示。
 
+* Session
+
+| 用户类型 | session项 |
+|:----:|:----:|
+| 系统管理员 | administratorID<br>UserName<br>Roll="administrator"|
+| 图书管理员 | LibrarianID<br>UserName<br>Roll="librarian"
+
 | 接口url | 功能描述 | 接收值 | 返回值 |
 |:------:|:------:|:-----:|:-----:|
 |/api/create_administrator|新增系统管理员|"UserName"<br/>"Password"|null
