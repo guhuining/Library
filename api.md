@@ -15,10 +15,9 @@
           }
 }
 ```
-* code为-1代表服务器错误；为0代表正确返回；为1代表数据错误，可以把返回的msg反馈给用户。
+* code为0代表正确返回；为1代表数据错误，可以把返回的msg反馈给用户。
 
 * msg为消息提示。
-
 * Session
 
 | 用户类型 | session项 |
@@ -38,3 +37,4 @@
 |/api/add_publication_type|添加出版物类型|"PublicationType" ```出版物类别```<br/>"Fine" ```超期罚款```|null|
 |/api/delete_publication_type|添加出版物类型|"PublicationType" ```出版物类别```|null|
 |/api/add_publication|添加出版物|"Name" ```书名```<br/>"ISBN"```ISBN```<br/>"Price"```出版物价格```<br/>"Total"```总数```<br/>"PublicationType"```出版物类别```<br/>"Author"```作者```<br/>|null|
+|/api/delete_publication|删除出版物|"PublicationID"```出版物ID```|null|
