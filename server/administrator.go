@@ -16,7 +16,7 @@ func CreateAdministrator(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	session, _ := store.Get(r, "library")
-	if session.Values["roll"] != "administrator" {
+	if session.Values["Roll"] != "administrator" {
 		w.Write(tools.ApiReturn(1, "权限不足", nil))
 		return
 	}
@@ -59,4 +59,28 @@ func LoginAdministrator(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(1, "密码错误", nil))
 		return
 	}
+}
+
+// @title	CreateLibrarian
+// @description	创建图书管理员
+// @param		w	http.ResponseWriter
+// @param		r	*http.Request
+func CreateLibrarian(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r) // 获取请求数据
+	if err != nil {
+		return
+	}
+	session, _ := store.Get(r, "library")
+	if session.Values["Roll"] != "administrator" {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	var librarian = &data.Librarian{UserName: postData["UserName"].(string), Password: postData["Password"].(string)}
+	err = librarian.Create() // 添加系统管理员
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "添加失败", nil))
+		print(err.Error())
+		return
+	}
+	w.Write(tools.ApiReturn(0, "添加成功", nil))
 }
