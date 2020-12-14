@@ -16,7 +16,7 @@ func (librarian *Librarian) Create() (err error) {
 // @param		Librarian.UserName	string	"用户名"
 // @return		err					error	"错误信息"
 func (librarian *Librarian) RetrieveByUserName() (err error) {
-	statement := "SELECT administratorID, password FROM Administrator WHERE username=?"
+	statement := "SELECT librarianID, password FROM Librarian WHERE username=?"
 	err = Db.QueryRow(statement, librarian.UserName).Scan(&librarian.LibrarianID, &librarian.Password)
 	return
 }
