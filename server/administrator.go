@@ -4,6 +4,7 @@ import (
 	"library/data"
 	"library/tools"
 	"net/http"
+	"strings"
 )
 
 // @title		CreateAdministrator
@@ -22,8 +23,10 @@ func CreateAdministrator(w http.ResponseWriter, r *http.Request) {
 	}
 	var administrator = &data.Administrator{UserName: postData["UserName"].(string), Password: postData["Password"].(string)}
 	err = administrator.Create() // 添加系统管理员
-	if err != nil {
-		w.Write(tools.ApiReturn(1, "添加失败", nil))
+	if err != nil && strings.Index(err.Error(), "duplicate") != -1 {
+		w.Write(tools.ApiReturn(1, "该账号已存在", nil))
+	} else if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 	} else {
 		w.Write(tools.ApiReturn(0, "添加成功", nil))
 	}
@@ -76,10 +79,12 @@ func CreateLibrarian(w http.ResponseWriter, r *http.Request) {
 	}
 	var librarian = &data.Librarian{UserName: postData["UserName"].(string), Password: postData["Password"].(string)}
 	err = librarian.Create() // 添加系统管理员
-	if err != nil {
-		w.Write(tools.ApiReturn(1, "添加失败", nil))
-		print(err.Error())
-		return
+	if err != nil && strings.Index(err.Error(), "duplicate") != -1 {
+		w.Write(tools.ApiReturn(1, "该账号已存在", nil))
+	} else if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "添加成功", nil))
 	}
-	w.Write(tools.ApiReturn(0, "添加成功", nil))
+
 }
