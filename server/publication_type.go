@@ -17,12 +17,11 @@ func AddPublicationType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 鉴权
-	session, err := store.Get(r, "library")
+	ok, err := authorizeAdministrator(r)
 	if err != nil {
 		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 		return
-	}
-	if session.Values["Roll"] != "Administrator" {
+	} else if !ok {
 		w.Write(tools.ApiReturn(1, "权限不足", nil))
 		return
 	}
@@ -50,12 +49,11 @@ func DeletePublicationType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 鉴权
-	session, err := store.Get(r, "library")
+	ok, err := authorizeAdministrator(r)
 	if err != nil {
 		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 		return
-	}
-	if session.Values["Roll"] != "Administrator" {
+	} else if !ok {
 		w.Write(tools.ApiReturn(1, "权限不足", nil))
 		return
 	}

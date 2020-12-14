@@ -72,8 +72,12 @@ func CreateLibrarian(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	session, _ := store.Get(r, "library")
-	if session.Values["Roll"] != "Administrator" {
+	//鉴权
+	ok, err := authorizeAdministrator(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
 		w.Write(tools.ApiReturn(1, "权限不足", nil))
 		return
 	}
