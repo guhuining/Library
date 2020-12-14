@@ -16,6 +16,7 @@ func main() {
 	http.HandleFunc("/api/create_administrator", controller.CreateAdministrator)
 	http.HandleFunc("/api/login_administrator", controller.LoginAdministrator)
 	http.HandleFunc("/api/create_librarian", controller.CreateLibrarian)
+	http.HandleFunc("/api/login_librarian", controller.LoginLibrarian)
 
 	server.ListenAndServe()
 }
