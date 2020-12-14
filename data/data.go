@@ -42,7 +42,7 @@ type Borrower struct {
 	Password string `json:"-"`
 }
 
-type PublicationFine struct {
+type PublicationType struct {
 	// 出版物类型对应的罚金
 	PublicationType string `json:"publication_type"`
 	Fine            int64  `json:"fine"`
@@ -56,7 +56,7 @@ type Publication struct {
 	Price           int64           `json:"price"`
 	Total           int64           `json:"total"`
 	Inventory       int64           `json:"inventory"`
-	PublicationFine PublicationFine `json:"publication_fine"`
+	PublicationFine PublicationType `json:"publication_fine"`
 	Author          string          `json:"author"`
 }
 
@@ -64,7 +64,7 @@ type BorrowItem struct {
 	// 借书信息
 	BorrowItemID int64           `json:"borrow_item_id"`
 	Card         Card            `json:"card"`
-	Publication  PublicationFine `json:"publication"`
+	Publication  PublicationType `json:"publication"`
 	BorrowDate   time.Time       `json:"borrow_date"`
 	DueDate      time.Time       `json:"due_date"`
 	Status       int64           `json:"status"`
