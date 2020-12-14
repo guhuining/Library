@@ -22,7 +22,7 @@ func LoginLibrarian(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "library")
 		session.Values["LibrarianID"] = librarian.LibrarianID
 		session.Values["UserName"] = librarian.UserName
-		session.Values["Roll"] = "librarian" // 设置权限
+		session.Values["Roll"] = "Librarian" // 设置权限
 		err = session.Save(r, w)
 
 		if err != nil { // session写入失败，登陆失败
