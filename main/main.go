@@ -21,6 +21,7 @@ func main() {
 	http.HandleFunc("/api/login_borrower", controller.LoginBorrower)
 	http.HandleFunc("/api/add_publication_type", controller.AddPublicationType)
 	http.HandleFunc("/api/delete_publication_type", controller.DeletePublicationType)
+	http.HandleFunc("/api/add_publication", controller.AddPublication)
 
 	server.ListenAndServe()
 }
