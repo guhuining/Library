@@ -20,3 +20,13 @@ func (librarian *Librarian) RetrieveByUserName() (err error) {
 	err = Db.QueryRow(statement, librarian.UserName).Scan(&librarian.LibrarianID, &librarian.Password)
 	return
 }
+
+// @title		Librarian.Delete
+// @description 删除图书管理员
+// @param		Librarian.LibrarianID	string	"管理员ID"
+// @return		err						error	"错误信息"
+func (librarian *Librarian) Delete() (err error) {
+	statement := `DELETE FROM Librarian WHERE librarianID=?`
+	_, err = Db.Query(statement, librarian.LibrarianID)
+	return
+}

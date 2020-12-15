@@ -92,3 +92,32 @@ func CreateLibrarian(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+// @title	DeleteLibrarian
+// @description	删除图书管理员
+// @param		w	http.ResponseWriter
+// @param		r	*http.Request
+func DeleteLibrarian(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r) // 获取请求数据
+	if err != nil {
+		return
+	}
+	//鉴权
+	ok, err := authorizeAdministrator(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	librarian := &data.Librarian{
+		LibrarianID: int64(postData["LibrarianID"].(float64)),
+	}
+	err = librarian.Delete()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "删除成功", nil))
+	}
+}
