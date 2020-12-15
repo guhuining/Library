@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.29, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: library
+-- Host: localhost    Database: library
 -- ------------------------------------------------------
--- Server version	5.7.31-log
+-- Server version	5.7.29
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,16 +32,6 @@ CREATE TABLE `administrator` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `administrator`
---
-
-LOCK TABLES `administrator` WRITE;
-/*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
-INSERT INTO `administrator` VALUES (1,'huining','gu20000927'),(2,'Test','asdfasdf');
-/*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `borrower`
 --
 
@@ -57,17 +47,8 @@ CREATE TABLE `borrower` (
   UNIQUE KEY `Borrower_username_uindex` (`username`),
   UNIQUE KEY `Borrower_cardNO_uindex` (`cardNO`),
   CONSTRAINT `Borrower_card_cardNO_fk` FOREIGN KEY (`cardNO`) REFERENCES `card` (`cardNO`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='借阅者';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='借阅者';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `borrower`
---
-
-LOCK TABLES `borrower` WRITE;
-/*!40000 ALTER TABLE `borrower` DISABLE KEYS */;
-/*!40000 ALTER TABLE `borrower` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `borrowertype`
@@ -83,15 +64,6 @@ CREATE TABLE `borrowertype` (
   PRIMARY KEY (`borrowerType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `borrowertype`
---
-
-LOCK TABLES `borrowertype` WRITE;
-/*!40000 ALTER TABLE `borrowertype` DISABLE KEYS */;
-/*!40000 ALTER TABLE `borrowertype` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `borrowitem`
@@ -116,15 +88,6 @@ CREATE TABLE `borrowitem` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `borrowitem`
---
-
-LOCK TABLES `borrowitem` WRITE;
-/*!40000 ALTER TABLE `borrowitem` DISABLE KEYS */;
-/*!40000 ALTER TABLE `borrowitem` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `card`
 --
 
@@ -144,15 +107,6 @@ CREATE TABLE `card` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `card`
---
-
-LOCK TABLES `card` WRITE;
-/*!40000 ALTER TABLE `card` DISABLE KEYS */;
-/*!40000 ALTER TABLE `card` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `librarian`
 --
 
@@ -165,17 +119,8 @@ CREATE TABLE `librarian` (
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`librarianID`),
   UNIQUE KEY `Librarian_username_uindex` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图书管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='图书管理员';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `librarian`
---
-
-LOCK TABLES `librarian` WRITE;
-/*!40000 ALTER TABLE `librarian` DISABLE KEYS */;
-/*!40000 ALTER TABLE `librarian` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `lostitem`
@@ -196,15 +141,6 @@ CREATE TABLE `lostitem` (
   CONSTRAINT `lostitem_card_cardNO_fk` FOREIGN KEY (`cardNO`) REFERENCES `card` (`cardNO`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `lostitem`
---
-
-LOCK TABLES `lostitem` WRITE;
-/*!40000 ALTER TABLE `lostitem` DISABLE KEYS */;
-/*!40000 ALTER TABLE `lostitem` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `orderitem`
@@ -228,15 +164,6 @@ CREATE TABLE `orderitem` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `orderitem`
---
-
-LOCK TABLES `orderitem` WRITE;
-/*!40000 ALTER TABLE `orderitem` DISABLE KEYS */;
-/*!40000 ALTER TABLE `orderitem` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `overtimeitem`
 --
 
@@ -255,15 +182,6 @@ CREATE TABLE `overtimeitem` (
   CONSTRAINT `OverTimeItem_card_cardNO_fk` FOREIGN KEY (`cardNO`) REFERENCES `card` (`cardNO`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `overtimeitem`
---
-
-LOCK TABLES `overtimeitem` WRITE;
-/*!40000 ALTER TABLE `overtimeitem` DISABLE KEYS */;
-/*!40000 ALTER TABLE `overtimeitem` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `publication`
@@ -288,15 +206,6 @@ CREATE TABLE `publication` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `publication`
---
-
-LOCK TABLES `publication` WRITE;
-/*!40000 ALTER TABLE `publication` DISABLE KEYS */;
-/*!40000 ALTER TABLE `publication` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `publicationtype`
 --
 
@@ -309,16 +218,6 @@ CREATE TABLE `publicationtype` (
   PRIMARY KEY (`publicationType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `publicationtype`
---
-
-LOCK TABLES `publicationtype` WRITE;
-/*!40000 ALTER TABLE `publicationtype` DISABLE KEYS */;
-INSERT INTO `publicationtype` VALUES ('图书',15),('杂志',10);
-/*!40000 ALTER TABLE `publicationtype` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -329,4 +228,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-14 21:35:55
+-- Dump completed on 2020-12-15 16:22:03
