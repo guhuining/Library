@@ -22,3 +22,27 @@ func (publication *Publication) Delete() (err error) {
 	_, err = Db.Query(statement, publication.PublicationID)
 	return
 }
+
+// @title	PublicationType.Delete
+// @description	新增出版物类型
+// @param	Name	Publication.Name	出版物名
+// @return	err		error				错误信息
+func (publication *Publication) RetrieveByName() (results []Publication, err error) {
+	statement := `SELECT * FROM Publication WHERE name LIKE ?`
+	rows, err := Db.Query(statement, `%`+publication.Name+`%`)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		result := &Publication{}
+		err = rows.Scan(&result.PublicationID, &result.Name, &result.ISBN, &result.Price, &result.Total,
+			&result.Inventory, &result.PublicationType.PublicationType, &result.Author)
+		if err != nil {
+			return
+		}
+		results = append(results, *result)
+	}
+	return
+}

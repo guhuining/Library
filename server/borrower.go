@@ -68,3 +68,27 @@ func LoginBorrower(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
+func GetPublicationByName(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	session, err := store.Get(r, "library")
+	if err != nil {
+		return
+	}
+	if _, ok := session.Values["UID"]; !ok {
+		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	}
+	publication := &data.Publication{
+		Name: postData["Name"].(string),
+	}
+	publications, err := publication.RetrieveByName()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "查询成功", &map[string]interface{}{"Publications": publications}))
+	}
+}

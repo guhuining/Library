@@ -1,5 +1,7 @@
 
 
+
+
 # 图书管理系统api
 
 ## 返回值约定
@@ -40,3 +42,47 @@
 |/api/delete_librarian|删除图书管理员|"LibrarianID"```管理员ID```|null|
 |/api/bind_card|绑定借阅证|"UID"```借阅者ID```<br/>"CardNO"```借阅证号码```<br/>"Name"```姓名```<br/>"Major"```专业```<br/>"BorrowerType"```借阅者类型```|null|
 |/api/delete_card|删除借阅证|"CardNO"```借阅证号码```|null|
+
+* /api/get_publication_by_name
+
+* 通过书名查找出版物
+
+* ```json
+  {
+      "Name": "书名"
+  }
+  ```
+
+* ```json
+  {
+      "Publications": [
+          {
+              "publication_id": 1,
+              "name": "C Primer Plus",
+              "isbn": "978-7-115-13022-8",
+              "price": 35,
+              "total": 20,
+              "inventory": 20,
+              "publication_Type": {
+                  "publication_type": "图书",
+                  "fine": 0
+              },
+              "author": "Stephen Prata"
+          },
+          {
+              "publication_id": 2,
+              "name": "C Primer",
+              "isbn": "978-7-115-13022-7",
+              "price": 35,
+              "total": 20,
+              "inventory": 20,
+              "publication_Type": {
+                  "publication_type": "图书",
+                  "fine": 0
+              },
+              "author": "Stephen Prata"
+          }
+      ]
+      
+  }
+  ```
