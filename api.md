@@ -10,8 +10,7 @@
   "msg": "get data successfully",
   "data": {
               "PublicationID": 2,
-              "ISBN": "123412341234",
-              ......
+              "ISBN": "123412341234"
           }
 }
 ```
@@ -40,3 +39,4 @@
 |/api/delete_publication|删除出版物|"PublicationID"```出版物ID```|null|
 |/api/delete_librarian|删除图书管理员|"LibrarianID"```管理员ID```|null|
 |/api/bind_card|绑定借阅证|"UID"```借阅者ID```<br/>"CardNO"```借阅证号码```<br/>"Name"```姓名```<br/>"Major"```专业```<br/>"BorrowerType"```借阅者类型```|null|
+|/api/delete_card|删除借阅证|"CardNO"```借阅证号码```|null|

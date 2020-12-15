@@ -285,3 +285,32 @@ func BindCard(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "绑定成功", nil))
 	}
 }
+
+// @title	DeleteCard
+// @description	绑定借阅证
+// @param	w	http.ResponseWriter
+// @param	r	*http.Request
+func DeleteCard(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	// 鉴权
+	ok, err := authorizeAdministrator(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	card := &data.Card{
+		CardNO: postData["CardNO"].(string),
+	}
+	err = card.DeleteCard()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "删除成功", nil))
+	}
+}
