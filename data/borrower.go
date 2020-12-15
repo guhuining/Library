@@ -49,16 +49,16 @@ func (borrower *Borrower) BindCard() (err error) {
 	if err != nil {
 		return
 	}
-	// 在borrower表中更新卡信息
-	statement := "UPDATE Borrower SET cardNO = ? WHERE UID = ?"
-	_, err = tx.Query(statement, borrower.Card.CardNO, borrower.UID)
+	statement := `INSERT INTO Card (cardNO, name, major, borrowerType) VALUES (?, ?, ?, ?)`
+	_, err = Db.Query(statement, borrower.Card.CardNO, borrower.Card.Name, borrower.Card.Major,
+		borrower.Card.BorrowerType.BorrowerType)
 	if err != nil {
 		tx.Rollback()
 		return
 	}
-	statement = `INSERT INTO Card (cardNO, name, major, borrowerType) VALUES (?, ?, ?, ?)`
-	_, err = Db.Query(statement, borrower.Card.CardNO, borrower.Card.Name, borrower.Card.Major,
-		borrower.Card.BorrowerType.BorrowerType)
+	// 在borrower表中更新卡信息
+	statement = "UPDATE Borrower SET cardNO = ? WHERE UID = ?"
+	_, err = tx.Query(statement, borrower.Card.CardNO, borrower.UID)
 	if err != nil {
 		tx.Rollback()
 		return
