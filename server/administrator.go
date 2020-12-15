@@ -246,3 +246,42 @@ func DeletePublicationType(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "删除成功", nil))
 	}
 }
+
+// @title	BindCard
+// @description	绑定借阅证
+// @param	w	http.ResponseWriter
+// @param	r	*http.Request
+func BindCard(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	// 鉴权
+	ok, err := authorizeAdministrator(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	borrower := &data.Borrower{
+		UID: int64(postData["UID"].(float64)),
+		Card: data.Card{
+			CardNO: postData["CardNO"].(string),
+			Name:   postData["Name"].(string),
+			Major:  postData["Major"].(string),
+			BorrowerType: data.BorrowerType{
+				BorrowerType: postData["BorrowerType"].(string),
+			},
+		},
+	}
+	err = borrower.BindCard()
+	if err != nil && strings.Index(err.Error(), "Duplicate") != -1 {
+		w.Write(tools.ApiReturn(1, "该借阅证已被使用", nil))
+	} else if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "绑定成功", nil))
+	}
+}

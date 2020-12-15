@@ -39,3 +39,4 @@
 |/api/add_publication|添加出版物|"Name" ```书名```<br/>"ISBN"```ISBN```<br/>"Price"```出版物价格```<br/>"Total"```总数```<br/>"PublicationType"```出版物类别```<br/>"Author"```作者```<br/>|null|
 |/api/delete_publication|删除出版物|"PublicationID"```出版物ID```|null|
 |/api/delete_librarian|删除图书管理员|"LibrarianID"```管理员ID```|null|
+|/api/bind_card|绑定借阅证|"UID"```借阅者ID```<br/>"CardNO"```借阅证号码```<br/>"Name"```姓名```<br/>"Major"```专业```<br/>"BorrowerType"```借阅者类型```|null|

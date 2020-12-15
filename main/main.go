@@ -24,6 +24,7 @@ func main() {
 	http.HandleFunc("/api/add_publication", controller.AddPublication)
 	http.HandleFunc("/api/delete_publication", controller.DeletePublication)
 	http.HandleFunc("/api/delete_librarian", controller.DeleteLibrarian)
+	http.HandleFunc("/api/bind_card", controller.BindCard)
 
 	server.ListenAndServe()
 }

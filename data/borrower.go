@@ -35,3 +35,34 @@ func (borrower *Borrower) RetrieveBorrowerByUserName() (err error) {
 	}
 	return
 }
+
+// @title Card.Insert
+// @description	插入新借阅证
+// @param	UID				Borrower.UID				借阅者标识符
+// @param	CardNO			Card.CardNO					借阅证号码
+// @param	Name			Card.Name					姓名
+// @param	Major			Card.Major					专业
+// @param	BorrowerType	BorrowerTYpe.BorrowerType	借阅者类型
+// @return
+func (borrower *Borrower) BindCard() (err error) {
+	tx, err := Db.Begin()
+	if err != nil {
+		return
+	}
+	// 在borrower表中更新卡信息
+	statement := "UPDATE Borrower SET cardNO = ? WHERE UID = ?"
+	_, err = tx.Query(statement, borrower.Card.CardNO, borrower.UID)
+	if err != nil {
+		tx.Rollback()
+		return
+	}
+	statement = `INSERT INTO Card (cardNO, name, major, borrowerType) VALUES (?, ?, ?, ?)`
+	_, err = Db.Query(statement, borrower.Card.CardNO, borrower.Card.Name, borrower.Card.Major,
+		borrower.Card.BorrowerType.BorrowerType)
+	if err != nil {
+		tx.Rollback()
+		return
+	}
+	tx.Commit()
+	return
+}
