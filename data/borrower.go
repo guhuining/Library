@@ -36,8 +36,8 @@ func (borrower *Borrower) RetrieveBorrowerByUserName() (err error) {
 	return
 }
 
-// @title Card.Insert
-// @description	插入新借阅证
+// @title Borrower.BindCard
+// @description	绑定借阅证
 // @param	UID				Borrower.UID				借阅者标识符
 // @param	CardNO			Card.CardNO					借阅证号码
 // @param	Name			Card.Name					姓名
