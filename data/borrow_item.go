@@ -1,6 +1,9 @@
 package data
 
-import "library/my_error"
+import (
+	"database/sql"
+	"library/my_error"
+)
 
 // @title BorrowItem.Borrow
 // @description	借书
@@ -24,12 +27,22 @@ func (borrowItem *BorrowItem) Borrow() (err error) {
 		tx.Rollback()
 		return
 	}
-	statement = `UPDATE Card JOIN BorrowerType SET currentBorrowNumber = currentBorrowNumber + 1 WHERE cardNO = ? AND 
-				 currentBorrowNumber < maxBorrowNumber`
-	_, err = tx.Query(statement)
+	statement = `SELECT currentBorrowNumber FROM Card INNER JOIN BorrowerType ON Card.borrowerType = BorrowerType.borrowerType 
+				 WHERE cardNO = ? AND currentBorrowNumber < maxBorrowNumber`
+	err = tx.QueryRow(statement, borrowItem.Card.CardNO).Scan(&borrowItem.Card.CurrentBorrowNumber)
+	if err != nil && err.Error() == sql.ErrNoRows.Error() {
+		err = my_error.MaxBorrowNumberError
+		tx.Rollback()
+		return
+	} else if err != nil {
+		return
+	}
+	statement = `UPDATE Card INNER JOIN BorrowerType ON Card.borrowerType = BorrowerType.borrowerType 
+				 SET currentBorrowNumber = currentBorrowNumber + 1 WHERE cardNO = ? 
+				 AND currentBorrowNumber < maxBorrowNumber`
+	_, err = tx.Query(statement, borrowItem.Card.CardNO)
 	if err != nil {
 		tx.Rollback()
-		err = my_error.MaxBorrowNumberError
 		return
 	}
 	tx.Commit()
