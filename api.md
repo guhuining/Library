@@ -93,4 +93,5 @@
 | ----------------------- | -------------------------------- | ------------------------------------------------------ | ------------------------------------------ |
 | /api/borrow_publication | 借书                             | CardNO```借阅证号码```<br/>PublicationID```出版物ID``` | null                                       |
 | /api/is_out_of_time     | 检查是否有图书逾期未还并返回罚金 | BorrowItemID```借阅订单ID```                           | Fine```罚金```(code=0)<br/>或null(code=-1) |
+| /api/return_publication | 还书                             | BorrowItemID```借阅订单ID```                           | null                                       |
 

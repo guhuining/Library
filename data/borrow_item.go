@@ -111,3 +111,14 @@ func (borrowItem *BorrowItem) GetFine() (err error) {
 	err = Db.QueryRow(statement, borrowItem.BorrowItemID).Scan(&borrowItem.Publication.PublicationType.Fine)
 	return
 }
+
+// @title BorrowItem.Return
+// @description	还书
+// @param	BorrowItemID	BorrowItem.BorrowItemID	借阅订单ID
+func (borrowItem *BorrowItem) Return() (err error) {
+	statement := `UPDATE BorrowItem JOIN Card ON BorrowItem.cardNO = Card.cardNO 
+				  SET status = 1, Card.currentBorrowNumber = Card.currentBorrowNumber - 1, dueDate = NOW() 
+				  WHERE BorrowItem.BorrowItemID = ? AND status = 0`
+	_, err = Db.Query(statement, borrowItem.BorrowItemID)
+	return
+}

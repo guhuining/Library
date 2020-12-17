@@ -116,3 +116,30 @@ func IsOutOfTime(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "未逾期", nil))
 	}
 }
+
+// @title	ReturnPublication
+// @description	还书
+func ReturnPublication(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	// 鉴权
+	ok, err := authorizeLibrarian(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	borrowItem := &data.BorrowItem{
+		BorrowItemID: int64(postData["BorrowItemID"].(float64)),
+	}
+	err = borrowItem.Return()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "还书成功", nil))
+	}
+}
