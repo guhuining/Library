@@ -38,6 +38,45 @@ func LoginLibrarian(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @title	BorrowPublication
+// @description	借阅图书
+func BorrowPublication(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	session, err := store.Get(r, "library")
+	if err != nil {
+		return
+	}
+	if _, ok := session.Values["UID"]; !ok {
+		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	}
+	borrowItem := &data.BorrowItem{
+		Card: data.Card{
+			CardNO: postData["CardNO"].(string),
+		},
+		Publication: data.Publication{
+			PublicationID: int64(postData["PublicationID"].(float64)),
+		},
+	}
+	err = borrowItem.Borrow()
+	if err != nil {
+		if err.Error() == my_error.BorrowOutOfTimeError.Error() {
+			w.Write(tools.ApiReturn(1, "还有图书逾期未归还", nil))
+		} else if err.Error() == my_error.InventoryNotEnoughError.Error() {
+			w.Write(tools.ApiReturn(1, "库存不足", nil))
+		} else if err.Error() == my_error.MaxBorrowNumberError.Error() {
+			w.Write(tools.ApiReturn(1, "借阅量已达上限", nil))
+		} else {
+			w.Write(tools.ApiReturn(1, err.Error(), nil))
+		}
+	} else {
+		w.Write(tools.ApiReturn(0, "借阅成功", nil))
+	}
+}
+
 // @title	IsOutOfTime
 // @description	查询是否逾期
 func IsOutOfTime(w http.ResponseWriter, r *http.Request) {
