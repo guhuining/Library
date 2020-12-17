@@ -73,3 +73,40 @@ func (borrowItem *BorrowItem) Borrow() (err error) {
 	tx.Commit()
 	return
 }
+
+// @title BorrowItem.IsOutOfTime
+// @description	查询是否逾期
+// @param	borrowItemID	BorrowItem.borrowItemID	借阅订单ID
+func (borrowItem *BorrowItem) IsOutOfTime() (err error) {
+	statement := `SELECT COUNT(*) FROM BorrowItem JOIN Card ON BorrowItem.cardNO = Card.cardNO
+				  								  JOIN BorrowerType ON Card.borrowerType = BorrowerType.borrowerType
+                  WHERE BorrowItem.borrowItemID = ? AND DATE_ADD(borrowDate, INTERVAL BorrowerType.period DAY) < now()`
+	rows, err := Db.Query(statement, borrowItem.BorrowItemID)
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+	if rows.Next() {
+		var count = 0
+		err = rows.Scan(&count)
+		if err != nil {
+			return
+		} else if count != 0 {
+			err = my_error.BorrowOutOfTimeError
+			return
+		}
+	}
+	return
+}
+
+// @title BorrowItem.GetFine
+// @description	获取超时罚金
+// @param	publicationID	Publication.PublicationID	出版物ID
+func (borrowItem *BorrowItem) GetFine() (err error) {
+	statement := `SELECT fine FROM BorrowItem
+    			  JOIN Publication ON BorrowItem.publicationID = Publication.publicationID
+    			  JOIN PublicationType ON Publication.publicationType = PublicationType.publicationType
+    			  WHERE BorrowItem.borrowItemID = ?`
+	err = Db.QueryRow(statement, borrowItem.BorrowItemID).Scan(&borrowItem.Publication.PublicationType.Fine)
+	return
+}

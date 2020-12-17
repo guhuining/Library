@@ -28,6 +28,7 @@ func main() {
 	http.HandleFunc("/api/delete_card", controller.DeleteCard)
 	http.HandleFunc("/api/get_publication_by_name", controller.GetPublicationByName)
 	http.HandleFunc("/api/borrow_publication", controller.BorrowPublication)
+	http.HandleFunc("/api/is_out_of_time", controller.IsOutOfTime)
 
 	server.ListenAndServe()
 }
