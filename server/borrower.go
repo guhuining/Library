@@ -119,7 +119,9 @@ func BorrowPublication(w http.ResponseWriter, r *http.Request) {
 	}
 	err = borrowItem.Borrow()
 	if err != nil {
-		if err.Error() == my_error.InventoryNotEnoughError.Error() {
+		if err.Error() == my_error.BorrowOutOfTimeError.Error() {
+			w.Write(tools.ApiReturn(1, "还有图书逾期未归还", nil))
+		} else if err.Error() == my_error.InventoryNotEnoughError.Error() {
 			w.Write(tools.ApiReturn(1, "库存不足", nil))
 		} else if err.Error() == my_error.MaxBorrowNumberError.Error() {
 			w.Write(tools.ApiReturn(1, "借阅量已达上限", nil))

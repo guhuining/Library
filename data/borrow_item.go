@@ -14,19 +14,44 @@ func (borrowItem *BorrowItem) Borrow() (err error) {
 	if err != nil {
 		return
 	}
-	statement := `UPDATE Publication SET inventory = inventory - 1 WHERE PublicationID = ?`
+	// 检查是否有未归还图书
+	statement := `SELECT COUNT(*) FROM BorrowItem JOIN Card ON BorrowItem.cardNO = Card.cardNO
+				  								  JOIN BorrowerType ON Card.borrowerType = BorrowerType.borrowerType
+                  WHERE BorrowItem.cardNO = ? AND DATE_ADD(borrowDate, INTERVAL BorrowerType.period DAY) < now()`
+	rows, err := tx.Query(statement, borrowItem.Card.CardNO)
+	if err != nil {
+		tx.Rollback()
+		return
+	}
+	if rows.Next() {
+		var count = 0
+		err = rows.Scan(&count)
+		if err != nil {
+			tx.Rollback()
+			return
+		} else if count != 0 {
+			err = my_error.BorrowOutOfTimeError
+			tx.Rollback()
+			return
+		}
+	}
+	rows.Close()
+	// 库存-1
+	statement = `UPDATE Publication SET inventory = inventory - 1 WHERE PublicationID = ?`
 	_, err = tx.Query(statement, borrowItem.Publication.PublicationID)
 	if err != nil {
 		tx.Rollback()
 		err = my_error.InventoryNotEnoughError
 		return
 	}
+	// 添加借阅信息
 	statement = `INSERT INTO BorrowItem (cardNO, publicationID, borrowDate) VALUES(?, ?, NOW())`
 	_, err = tx.Query(statement, borrowItem.Card.CardNO, borrowItem.Publication.PublicationID)
 	if err != nil {
 		tx.Rollback()
 		return
 	}
+	// 查询借阅量是否达到上限
 	statement = `SELECT currentBorrowNumber FROM Card INNER JOIN BorrowerType ON Card.borrowerType = BorrowerType.borrowerType 
 				 WHERE cardNO = ? AND currentBorrowNumber < maxBorrowNumber`
 	err = tx.QueryRow(statement, borrowItem.Card.CardNO).Scan(&borrowItem.Card.CurrentBorrowNumber)
