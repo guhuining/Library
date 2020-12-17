@@ -95,3 +95,39 @@
 | /api/is_out_of_time     | 检查是否有图书逾期未还并返回罚金 | BorrowItemID```借阅订单ID```                           | Fine```罚金```(code=0)<br/>或null(code=-1) |
 | /api/return_publication | 还书                             | BorrowItemID```借阅订单ID```                           | null                                       |
 
+* /api/get_borrow_item
+
+* 查询所有进行中的借阅订单
+
+* ```json
+  {
+      "CardNO": "XXXXXX"
+  }
+  ```
+
+  ```json
+  {
+      "BorrowItems": [
+          {
+              "Author": "Stephen Prata",
+              "BorrowItemID": 20,
+              "Name": "C Primer Plus"
+          },
+          {
+              "Author": "Stephen Prata",
+              "BorrowItemID": 21,
+              "Name": "C Primer Plus"
+          },
+          {
+              "Author": "Stephen Prata",
+              "BorrowItemID": 27,
+              "Name": "C Primer Plus"
+          },
+          {
+              "Author": "Stephen Prata",
+              "BorrowItemID": 28,
+              "Name": "C Primer Plus"
+          }
+      ]
+  }
+  ```

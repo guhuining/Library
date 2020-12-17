@@ -122,3 +122,23 @@ func (borrowItem *BorrowItem) Return() (err error) {
 	_, err = Db.Query(statement, borrowItem.BorrowItemID)
 	return
 }
+
+// @title BorrowItem.GetBorrowItem
+func (borrowItem *BorrowItem) GetBorrowItem() (results []BorrowItem, err error) {
+	statement := `SELECT b.borrowItemID, p.name, p.author
+				  FROM BorrowItem b JOIN publication p on b.publicationID = p.publicationID
+				  WHERE b.cardNO = ? AND b.status = 0`
+	rows, err := Db.Query(statement, borrowItem.Card.CardNO)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		var temp BorrowItem
+		err = rows.Scan(&temp.BorrowItemID, &temp.Publication.Name, &temp.Publication.Author)
+		if err != nil {
+			return
+		}
+		results = append(results, temp)
+	}
+	return
+}

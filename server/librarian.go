@@ -143,3 +143,39 @@ func ReturnPublication(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "还书成功", nil))
 	}
 }
+
+// @title	ReturnPublication
+// @description	获取所有借阅订单
+func GetBorrowItem(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	// 鉴权
+	ok, err := authorizeLibrarian(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	borrowItem := &data.BorrowItem{
+		Card: data.Card{
+			CardNO: postData["CardNO"].(string),
+		},
+	}
+	borrowItems, err := borrowItem.GetBorrowItem()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	}
+	var ret []map[string]interface{}
+	for _, item := range borrowItems {
+		ret = append(ret, map[string]interface{}{
+			"BorrowItemID": item.BorrowItemID,
+			"Name":         item.Publication.Name,
+			"Author":       item.Publication.Author,
+		})
+	}
+	w.Write(tools.ApiReturn(0, "获取数据成功", &map[string]interface{}{"BorrowItems": ret}))
+}
