@@ -17,7 +17,8 @@ func (borrowItem *BorrowItem) Borrow() (err error) {
 	// 检查是否有未归还图书
 	statement := `SELECT COUNT(*) FROM BorrowItem JOIN Card ON BorrowItem.cardNO = Card.cardNO
 				  								  JOIN BorrowerType ON Card.borrowerType = BorrowerType.borrowerType
-                  WHERE BorrowItem.cardNO = ? AND DATE_ADD(borrowDate, INTERVAL BorrowerType.period DAY) < now()`
+                  WHERE BorrowItem.cardNO = ? AND DATE_ADD(borrowDate, INTERVAL BorrowerType.period DAY) < now()
+                  AND status = 0`
 	rows, err := tx.Query(statement, borrowItem.Card.CardNO)
 	if err != nil {
 		tx.Rollback()
