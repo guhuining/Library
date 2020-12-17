@@ -20,3 +20,18 @@ func (publicationType *PublicationType) Delete() (err error) {
 	_, err = Db.Query(statement, publicationType.PublicationType)
 	return
 }
+
+// @title PublicationType.GetPublicationType
+// @description 获取所有出版物类型
+func (publicationType *PublicationType) GetPublicationType() (results []PublicationType, err error) {
+	statement := `SELECT * FROM PublicationType`
+	rows, err := Db.Query(statement)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		var temp PublicationType
+		results = append(results, temp)
+	}
+	return
+}

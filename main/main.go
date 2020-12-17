@@ -31,6 +31,7 @@ func main() {
 	http.HandleFunc("/api/is_out_of_time", controller.IsOutOfTime)
 	http.HandleFunc("/api/return_publication", controller.ReturnPublication)
 	http.HandleFunc("/api/get_borrow_item", controller.GetBorrowItem)
+	http.HandleFunc("/api/get_publication_type", controller.GetPublicationType)
 
 	server.ListenAndServe()
 }
