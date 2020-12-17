@@ -45,12 +45,13 @@ func BorrowPublication(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	session, err := store.Get(r, "library")
+	// 鉴权
+	ok, err := authorizeLibrarian(r)
 	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 		return
-	}
-	if _, ok := session.Values["UID"]; !ok {
-		w.Write(tools.ApiReturn(1, "请先登录", nil))
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
 		return
 	}
 	borrowItem := &data.BorrowItem{
