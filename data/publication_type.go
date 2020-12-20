@@ -31,6 +31,10 @@ func (publicationType *PublicationType) GetPublicationType() (results []Publicat
 	}
 	for rows.Next() {
 		var temp PublicationType
+		err = rows.Scan(&temp.PublicationType, &temp.Fine)
+		if err != nil {
+			return
+		}
 		results = append(results, temp)
 	}
 	return

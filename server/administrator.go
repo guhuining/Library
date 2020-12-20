@@ -335,9 +335,5 @@ func GetPublicationType(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 		return
 	}
-	var ret []string
-	for _, t := range types {
-		ret = append(ret, t.PublicationType)
-	}
-	w.Write(tools.ApiReturn(0, "获取数据成功", &map[string]interface{}{"PublicationTypes": ret}))
+	w.Write(tools.ApiReturn(0, "获取数据成功", &map[string]interface{}{"PublicationType": types}))
 }
