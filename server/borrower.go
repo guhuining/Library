@@ -92,3 +92,34 @@ func GetPublicationByName(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "查询成功", &map[string]interface{}{"Publications": publications}))
 	}
 }
+
+// @title	OrderPublication
+// @description	预定图书
+func OrderPublication(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	session, err := store.Get(r, "library")
+	if err != nil {
+		return
+	}
+	if _, ok := session.Values["UID"]; !ok {
+		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	}
+	orderItem := &data.OrderItem{
+		Publication: data.Publication{
+			PublicationID: int64(postData["PublicationID"].(float64)),
+		},
+		Card: data.Card{
+			CardNO: session.Values["CardNO"].(string),
+		},
+	}
+	err = orderItem.Insert()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "预定成功", nil))
+	}
+}
