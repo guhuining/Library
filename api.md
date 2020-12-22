@@ -34,7 +34,7 @@
 |/api/create_librarian|新增图书管理员|"UserName"<br/>"Password"|null|
 |/api/login_librarian|图书管理员登录|"UserName"<br/>"Password"|null|
 |/api/create_borrower|借阅者注册|"UserName"<br/>"Password"|null|
-|/api/login_librarian|借阅者登录|"UserName"<br/>"Password"|null|
+|/api/login_borrower|借阅者登录|"UserName"<br/>"Password"|null|
 |/api/add_publication_type|添加出版物类型|"PublicationType" ```出版物类别```<br/>"Fine" ```超期罚款```|null|
 |/api/delete_publication_type|删除出版物类型|"PublicationType" ```出版物类别```|null|
 |/api/add_publication|添加出版物|"Name" ```书名```<br/>"ISBN"```ISBN```<br/>"Price"```出版物价格```<br/>"Total"```总数```<br/>"PublicationType"```出版物类别```<br/>"Author"```作者```<br/>|null|
