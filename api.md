@@ -135,3 +135,25 @@
 | ----------------------- | -------------------------------- | ------------------------------------------------------ | ------------------------------------------ |
 |/api/order_publication/|预定图书|PublicationID```出版物ID```|null|
 |/api/cancel_order_item/|取消预订|PublicationID```出版物ID```|null|
+
+* /api/borrower_get_order_item
+
+* 借阅者查询自己未完成的订单
+
+* null
+
+* ```json
+  {
+      "OrderItem": [
+          {
+              "Author": "Stephen Prata",
+              "Inventory": 16,
+              "Name": "C Primer Plus",
+              "OrderItemID": 1,
+              "PublicationID": 1,
+              "Total": 20
+          }
+      ]
+  }
+  ```
+

@@ -149,3 +149,40 @@ func CancelOrderItem(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "取消成功", nil))
 	}
 }
+
+// @title BorrowerGetOrderItem
+// @description 获取所有未兑现订单
+func BorrowerGetOrderItem(w http.ResponseWriter, r *http.Request) {
+	session, err := store.Get(r, "library")
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	}
+	if _, ok := session.Values["UID"]; !ok {
+		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	}
+	orderItem := &data.OrderItem{
+		Card: data.Card{
+			CardNO: session.Values["CardNO"].(string),
+		},
+	}
+	results, err := orderItem.RetrieveByCardNO()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		var ret []map[string]interface{}
+		for _, result := range results {
+			temp := &map[string]interface{}{
+				"OrderItemID":   result.OrderItemID,
+				"PublicationID": result.Publication.PublicationID,
+				"Name":          result.Publication.Name,
+				"Author":        result.Publication.Author,
+				"Total":         result.Publication.Total,
+				"Inventory":     result.Publication.Inventory,
+			}
+			ret = append(ret, *temp)
+		}
+		w.Write(tools.ApiReturn(0, "获取成功", &map[string]interface{}{"OrderItem": ret}))
+	}
+}
