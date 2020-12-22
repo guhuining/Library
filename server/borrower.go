@@ -76,6 +76,7 @@ func GetPublicationByName(w http.ResponseWriter, r *http.Request) {
 	}
 	session, err := store.Get(r, "library")
 	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 		return
 	}
 	if _, ok := session.Values["UID"]; !ok {
@@ -102,6 +103,7 @@ func OrderPublication(w http.ResponseWriter, r *http.Request) {
 	}
 	session, err := store.Get(r, "library")
 	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 		return
 	}
 	if _, ok := session.Values["UID"]; !ok {
@@ -133,6 +135,7 @@ func CancelOrderItem(w http.ResponseWriter, r *http.Request) {
 	}
 	session, err := store.Get(r, "library")
 	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
 		return
 	}
 	if _, ok := session.Values["UID"]; !ok {
