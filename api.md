@@ -157,3 +157,26 @@
   }
   ```
 
+
+
+* /api/librarian_get_order_item
+
+* 图书管理员查询自己未完成的订单
+
+* null
+
+* ```json
+  {
+      "OrderItem": [
+          {
+              "Author": "Stephen Prata",
+              "Inventory": 16,
+              "Name": "C Primer Plus",
+              "OrderItemID": 1,
+              "PublicationID": 1,
+              "Total": 20
+          }
+      ]
+  }
+  ```
+

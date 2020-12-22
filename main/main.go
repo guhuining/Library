@@ -35,6 +35,7 @@ func main() {
 	http.HandleFunc("/api/order_publication", controller.OrderPublication)
 	http.HandleFunc("/api/cancel_order_item", controller.CancelOrderItem)
 	http.HandleFunc("/api/borrower_get_order_item", controller.BorrowerGetOrderItem)
+	http.HandleFunc("/api/librarian_get_order_item", controller.LibrarianGetOrderItem)
 
 	server.ListenAndServe()
 }
