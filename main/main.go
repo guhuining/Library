@@ -33,6 +33,7 @@ func main() {
 	http.HandleFunc("/api/get_borrow_item", controller.GetBorrowItem)
 	http.HandleFunc("/api/get_publication_type", controller.GetPublicationType)
 	http.HandleFunc("/api/order_publication", controller.OrderPublication)
+	http.HandleFunc("/api/cancel_order_item", controller.CancelOrderItem)
 
 	server.ListenAndServe()
 }

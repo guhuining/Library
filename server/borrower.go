@@ -123,3 +123,29 @@ func OrderPublication(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "预定成功", nil))
 	}
 }
+
+// @title CancelOrderItem
+// @description 取消订单
+func CancelOrderItem(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	if err != nil {
+		return
+	}
+	session, err := store.Get(r, "library")
+	if err != nil {
+		return
+	}
+	if _, ok := session.Values["UID"]; !ok {
+		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	}
+	orderItem := &data.OrderItem{
+		OrderItemID: int64(postData["OrderItemID"].(float64)),
+	}
+	err = orderItem.Delete()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "取消成功", nil))
+	}
+}
