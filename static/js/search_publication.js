@@ -1,6 +1,11 @@
 $(document).ready(function (){
+    let postFlag = false
     // 搜索
     $("#Submit").click(function (){
+        if (postFlag === true) {
+            return;
+        }
+        postFlag = true
         let name = $("#Search").val();
         let Data = {
             "Name": name
@@ -49,7 +54,8 @@ $(document).ready(function (){
             error: function (message) {
                 alert("error");
             }
-        })
+        });
+        postFlag = false;
     });
 });
 
