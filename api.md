@@ -161,9 +161,15 @@
 
 * /api/librarian_get_order_item
 
-* 图书管理员查询自己未完成的订单
+* 图书管理员根据卡号查询未完成的订单
 
-* null
+* ```json
+  {
+      "CardNO": "卡号"
+  }
+  ```
+
+  
 
 * ```json
   {
