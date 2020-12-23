@@ -109,6 +109,9 @@ func OrderPublication(w http.ResponseWriter, r *http.Request) {
 	if _, ok := session.Values["UID"]; !ok {
 		w.Write(tools.ApiReturn(1, "请先登录", nil))
 		return
+	} else if session.Values["CardNO"] == nil {
+		w.Write(tools.ApiReturn(1, "还未绑定借阅证", nil))
+		return
 	}
 	orderItem := &data.OrderItem{
 		Publication: data.Publication{
@@ -163,6 +166,9 @@ func BorrowerGetOrderItem(w http.ResponseWriter, r *http.Request) {
 	}
 	if _, ok := session.Values["UID"]; !ok {
 		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	} else if session.Values["CardNO"] == nil {
+		w.Write(tools.ApiReturn(1, "还未绑定借阅证", nil))
 		return
 	}
 	orderItem := &data.OrderItem{
