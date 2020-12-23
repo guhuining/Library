@@ -17,7 +17,7 @@ $(document).ready(function(){
             dataType: "json",
             success: function (data) {
                 if(data["code"] === 0) {
-                    alert("登陆成功")
+                    window.location.replace("/search_publication.html");
                 } else {
                     alert(data["msg"])
                 }
