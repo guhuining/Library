@@ -1,4 +1,5 @@
 $(document).ready(function (){
+    // 搜索
     $("#Submit").click(function (){
         let name = $("#Search").val();
         let Data = {
@@ -29,13 +30,13 @@ $(document).ready(function (){
                 $.each(data["data"]["Publications"], function (index, element){
                     h += `
                     <tr>
-                        <input style="display: none" value="` + element["publication_id"] + `">
+                        <input type="hidden" value="` + element["publication_id"] + `">
                         <td>` + (index + 1) + `</td>
                         <td>` + element["name"] + `</td>
                         <td>` + element["author"] + `</td>
                         <td>` + element["inventory"] + `/` + element["total"] + `</td>
                         <td>` + element["publication_type"]["publication_type"] + `</td>
-                        <td><a>预定</a></td>
+                        <td><a href="javascript:void(0)" onclick="order(this)">预定</a></td>
                     </tr>
                     `
                 })
@@ -51,3 +52,23 @@ $(document).ready(function (){
         })
     });
 });
+
+//预定
+function order(element) {
+    let id = parseInt($(element).parents("tr").children("input").val());
+    $.ajax({
+        type: "POST",
+        url: "/api/order_publication",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "PublicationID": id
+        }),
+        dataType: "json",
+        success: function (data) {
+            alert(data["msg"]);
+        },
+        error: function (message) {
+            alert("error");
+        }
+    });
+}
