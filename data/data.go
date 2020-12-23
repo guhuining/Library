@@ -56,7 +56,7 @@ type Publication struct {
 	Price           int64           `json:"price"`
 	Total           int64           `json:"total"`
 	Inventory       int64           `json:"inventory"`
-	PublicationType PublicationType `json:"publication_Type"`
+	PublicationType PublicationType `json:"publication_type"`
 	Author          string          `json:"author"`
 }
 

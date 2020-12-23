@@ -63,7 +63,7 @@
               "price": 35,
               "total": 20,
               "inventory": 20,
-              "publication_Type": {
+              "publication_type": {
                   "publication_type": "图书",
                   "fine": 0
               },
