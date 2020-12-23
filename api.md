@@ -134,7 +134,7 @@
 | 接口url                 | 功能描述                         | 接收值                                                 | 返回值                                     |
 | ----------------------- | -------------------------------- | ------------------------------------------------------ | ------------------------------------------ |
 |/api/order_publication/|预定图书|PublicationID```出版物ID```|null|
-|/api/cancel_order_item/|取消预订|PublicationID```出版物ID```|null|
+|/api/cancel_order_item/|取消预订|OrderItemID```出版物ID```|null|
 
 * /api/borrower_get_order_item
 
