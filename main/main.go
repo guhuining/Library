@@ -38,6 +38,7 @@ func main() {
 	http.HandleFunc("/api/librarian_get_order_item", controller.LibrarianGetOrderItem)
 	http.HandleFunc("/api/is_login", controller.IsLogin)
 	http.HandleFunc("/api/logout", controller.Logout)
+	http.HandleFunc("/api/borrower_get_borrowed_item", controller.BorrowerGetBorrowedPublication)
 
 	server.ListenAndServe()
 }

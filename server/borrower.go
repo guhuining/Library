@@ -94,6 +94,44 @@ func GetPublicationByName(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @title BorrowerGetBorrowedPublication
+// @title 获取已借阅的图书列表
+func BorrowerGetBorrowedPublication(w http.ResponseWriter, r *http.Request) {
+	session, err := store.Get(r, "library")
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	}
+	if _, ok := session.Values["UID"]; !ok {
+		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	} else if session.Values["CardNO"] == nil {
+		w.Write(tools.ApiReturn(1, "还未绑定借阅证", nil))
+		return
+	}
+	borrowItem := &data.BorrowItem{
+		Card: data.Card{
+			CardNO: session.Values["CardNO"].(string),
+		},
+	}
+	results, err := borrowItem.GetBorrowItem()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		var ret []map[string]interface{}
+		for _, item := range results {
+			temp := map[string]interface{}{
+				"BorrowItemID": item.BorrowItemID,
+				"Name": item.Publication.Name,
+				"Author": item.Publication.Author,
+			}
+			ret = append(ret, temp)
+		}
+		w.Write(tools.ApiReturn(0, "查询成功", &map[string]interface{}{"BorrowItems": ret}))
+	}
+
+}
+
 // @title	OrderPublication
 // @description	预定图书
 func OrderPublication(w http.ResponseWriter, r *http.Request) {
