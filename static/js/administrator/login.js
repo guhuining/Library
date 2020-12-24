@@ -17,7 +17,7 @@ $(document).ready(function(){
             dataType: "json",
             success: function (data) {
                 if(data["code"] === 0) {
-                    // window.location.replace("/search_publication.html");
+                    window.location.replace("/administrator/add_card.html");
                 } else {
                     alert(data["msg"])
                 }
