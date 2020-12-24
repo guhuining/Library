@@ -261,7 +261,7 @@ func GetBorrowerMessage(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			ret = map[string]interface{}{
-				"UID":               int64(session.Values["UID"].(float64)),
+				"UID":               session.Values["UID"].(int64),
 				"CardNO":            session.Values["CardNO"].(string),
 				"Name":              session.Values["Name"].(string),
 				"Major":             session.Values["Major"].(string),
