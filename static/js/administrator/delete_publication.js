@@ -78,6 +78,7 @@ function deletePublication(element) {
         }),
         dataType: "json",
         success: function (data) {
+            $(element).parents("tr").remove();
             alert(data["msg"]);
         },
         error: function (message) {
