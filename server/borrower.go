@@ -234,3 +234,42 @@ func BorrowerGetOrderItem(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "获取成功", &map[string]interface{}{"OrderItem": ret}))
 	}
 }
+
+// @title GetBorrowerMessage
+// @description 获取借阅者信息
+func GetBorrowerMessage(w http.ResponseWriter, r *http.Request) {
+	session, err := store.Get(r, "library")
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	}
+	if _, ok := session.Values["UID"]; !ok {
+		w.Write(tools.ApiReturn(1, "请先登录", nil))
+		return
+	}
+	borrowerType := &data.BorrowerType{
+		BorrowerType: session.Values["BorrowerType"].(string),
+	}
+	err = borrowerType.RetrieveType()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		var ret map[string]interface{}
+		if _, ok := session.Values["CardNO"]; !ok {
+			ret = map[string]interface{}{
+				"UID": int64(session.Values["UID"].(float64)),
+			}
+		} else {
+			ret = map[string]interface{}{
+				"UID":               int64(session.Values["UID"].(float64)),
+				"CardNO":            session.Values["CardNO"].(string),
+				"Name":              session.Values["Name"].(string),
+				"Major":             session.Values["Major"].(string),
+				"BorrowerType":      session.Values["BorrowerType"].(string),
+				"Period":            borrowerType.Period,
+				"MaxBorrowerNumber": borrowerType.MaxBorrowNumber,
+			}
+		}
+		w.Write(tools.ApiReturn(0, "获取成功", &ret))
+	}
+}

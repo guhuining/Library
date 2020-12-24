@@ -19,3 +19,9 @@ func (borrowerType *BorrowerType) GetBorrowerType() (results []BorrowerType, err
 	}
 	return
 }
+
+func (borrowerType *BorrowerType) RetrieveType() (err error) {
+	statement := `SELECT period, maxBorrowNumber FROM BorrowerType WHERE borrowerType=?`
+	err = Db.QueryRow(statement, borrowerType.BorrowerType).Scan(&borrowerType.Period, &borrowerType.MaxBorrowNumber)
+	return
+}
