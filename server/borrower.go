@@ -247,29 +247,29 @@ func GetBorrowerMessage(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(1, "请先登录", nil))
 		return
 	}
-	borrowerType := &data.BorrowerType{
-		BorrowerType: session.Values["BorrowerType"].(string),
-	}
-	err = borrowerType.RetrieveType()
-	if err != nil {
-		w.Write(tools.ApiReturn(1, "服务器错误", nil))
-	} else {
-		var ret map[string]interface{}
-		if _, ok := session.Values["CardNO"]; !ok {
-			ret = map[string]interface{}{
-				"UID": int64(session.Values["UID"].(float64)),
-			}
-		} else {
-			ret = map[string]interface{}{
-				"UID":               session.Values["UID"].(int64),
-				"CardNO":            session.Values["CardNO"].(string),
-				"Name":              session.Values["Name"].(string),
-				"Major":             session.Values["Major"].(string),
-				"BorrowerType":      session.Values["BorrowerType"].(string),
-				"Period":            borrowerType.Period,
-				"MaxBorrowerNumber": borrowerType.MaxBorrowNumber,
-			}
+	var ret map[string]interface{}
+	if session.Values["CardNO"] == nil {
+		ret = map[string]interface{}{
+			"UID": session.Values["UID"].(int64),
 		}
-		w.Write(tools.ApiReturn(0, "获取成功", &ret))
+	} else {
+		borrowerType := &data.BorrowerType{
+			BorrowerType: session.Values["BorrowerType"].(string),
+		}
+		err = borrowerType.RetrieveType()
+		if err != nil {
+			w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		}
+		ret = map[string]interface{}{
+			"UID":               session.Values["UID"].(int64),
+			"CardNO":            session.Values["CardNO"].(string),
+			"Name":              session.Values["Name"].(string),
+			"Major":             session.Values["Major"].(string),
+			"BorrowerType":      session.Values["BorrowerType"].(string),
+			"Period":            borrowerType.Period,
+			"MaxBorrowerNumber": borrowerType.MaxBorrowNumber,
+		}
 	}
+	w.Write(tools.ApiReturn(0, "获取成功", &ret))
+
 }
