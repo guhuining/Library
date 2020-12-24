@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加出版物类型</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/administrator/add_card.css"/>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/js/administrator/add_publication_type.js"></script>
+    <script src="/js/administrator/jump.js"></script>
+</head>
+<body>
+<div id="header"></div>
+<script>$("#header").load("/administrator/head.html")</script>
+<div class="row">
+    <div class="col-md12 top"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="add_card_frame">
+            <form>
+                <div class="form-group">
+                    <label for="Type">出版物类型</label>
+                    <input type="text" class="form-control" id="Type" placeholder="出版物类型">
+                </div>
+                <div class="form-group">
+                    <label for="Fine">罚金</label>
+                    <input type="number" class="form-control" id="Fine" placeholder="罚金">
+                </div>
+                <button type="button" class="btn btn-default" id="Submit">添加</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
