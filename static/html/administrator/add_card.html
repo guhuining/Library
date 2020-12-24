@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>办理借阅证</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/administrator/login.css"/>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!--jquery-->
+    <script src="/js/administrator/add_card.js"></script>
+</head>
+<body>
+<div id="header"></div>
+<script>$("#header").load("/administrator/head.html")</script>
+<div class="row">
+    <div class="col-md12 top"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="login_frame">
+            <form>
+                <div class="form-group">
+                    <label for="UID">需要绑定账号的UID</label>
+                    <input type="number" class="form-control" id="UID" placeholder="UID">
+                </div>
+                <div class="form-group">
+                    <label for="CardNO">将要绑定的借阅证卡号</label>
+                    <input type="text" class="form-control" id="CardNO" placeholder="CardNO">
+                </div>
+                <div class="form-group">
+                    <label for="Name">姓名</label>
+                    <input type="text" class="form-control" id="Name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="Major">专业</label>
+                    <input type="text" class="form-control" id="Major" placeholder="Major">
+                </div>
+                <div class="form-group">
+                    <label for="Type">借阅者类型</label>
+                    <select class="form-control" id="Type">
+
+                    </select>
+                </div>
+                <button type="button" class="btn btn-default" id="Submit">绑定</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
