@@ -10,7 +10,7 @@ $(document).ready(function (){
                 alert(data["msg"]);
             } else {
                 let h;
-                if (data["data"]["CardNO"] == null) {
+                if (data["data"]["CardNO"] === undefined) {
                     h = `
                     <div class="panel panel-primary">
                         <div class="panel-heading">UID</div>
