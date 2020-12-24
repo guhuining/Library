@@ -360,3 +360,25 @@ func GetBorrowerType(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(tools.ApiReturn(0, "获取数据成功", &map[string]interface{}{"BorrowerType": types}))
 }
+
+func AdministratorGetPublicationByName(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	// 鉴权
+	ok, err := authorizeAdministrator(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	publication := &data.Publication{
+		Name: postData["Name"].(string),
+	}
+	publications, err := publication.RetrieveByName()
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "查询成功", &map[string]interface{}{"Publications": publications}))
+	}
+}
