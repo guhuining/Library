@@ -116,14 +116,15 @@ func BorrowerGetBorrowedPublication(w http.ResponseWriter, r *http.Request) {
 	}
 	results, err := borrowItem.GetBorrowItem()
 	if err != nil {
-		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		w.Write(tools.ApiReturn(1, err.Error(), nil))
 	} else {
 		var ret []map[string]interface{}
 		for _, item := range results {
 			temp := map[string]interface{}{
 				"BorrowItemID": item.BorrowItemID,
-				"Name": item.Publication.Name,
-				"Author": item.Publication.Author,
+				"Name":         item.Publication.Name,
+				"Author":       item.Publication.Author,
+				"BorrowDate":   item.BorrowDate.Format("2006-01-02 15:04:05"),
 			}
 			ret = append(ret, temp)
 		}

@@ -13,6 +13,7 @@ $(document).ready(function (){
                                     <th>#</th>
                                     <th>书名</th>
                                     <th>作者</th>
+                                    <th>借阅时间</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,6 +35,7 @@ $(document).ready(function (){
                                 <td>` + (index + 1) + `</td>
                                 <td>` + element["Name"] + `</td>
                                 <td>` + element["Author"] + `</td>
+                                <td>` + element["BorrowDate"] + `</td>
                             </tr>
                             `
                 });

@@ -3,6 +3,7 @@ package data
 import (
 	"database/sql"
 	"library/my_error"
+	"time"
 )
 
 // @title BorrowItem.Borrow
@@ -125,7 +126,7 @@ func (borrowItem *BorrowItem) Return() (err error) {
 
 // @title BorrowItem.GetBorrowItem
 func (borrowItem *BorrowItem) GetBorrowItem() (results []BorrowItem, err error) {
-	statement := `SELECT b.borrowItemID, p.name, p.author
+	statement := `SELECT b.borrowItemID, p.name, p.author, b.borrowDate
 				  FROM BorrowItem b JOIN publication p on b.publicationID = p.publicationID
 				  WHERE b.cardNO = ? AND b.status = 0`
 	rows, err := Db.Query(statement, borrowItem.Card.CardNO)
@@ -134,7 +135,9 @@ func (borrowItem *BorrowItem) GetBorrowItem() (results []BorrowItem, err error) 
 	}
 	for rows.Next() {
 		var temp BorrowItem
-		err = rows.Scan(&temp.BorrowItemID, &temp.Publication.Name, &temp.Publication.Author)
+		var t string
+		err = rows.Scan(&temp.BorrowItemID, &temp.Publication.Name, &temp.Publication.Author, &t)
+		temp.BorrowDate, _ = time.Parse("2006-01-02 15:04:05", t)
 		if err != nil {
 			return
 		}
