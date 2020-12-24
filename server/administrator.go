@@ -343,15 +343,6 @@ func GetPublicationType(w http.ResponseWriter, r *http.Request) {
 // @param	w	http.ResponseWriter
 // @param	r	*http.Request
 func GetBorrowerType(w http.ResponseWriter, r *http.Request) {
-	// 鉴权
-	ok, err := authorizeAdministrator(r)
-	if err != nil {
-		w.Write(tools.ApiReturn(1, "服务器错误", nil))
-		return
-	} else if !ok {
-		w.Write(tools.ApiReturn(1, "权限不足", nil))
-		return
-	}
 	borrowerType := &data.BorrowerType{}
 	types, err := borrowerType.GetBorrowerType()
 	if err != nil {
