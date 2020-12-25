@@ -242,3 +242,31 @@ func LibrarianGetPublicationByName(w http.ResponseWriter, r *http.Request) {
 		w.Write(tools.ApiReturn(0, "查询成功", &map[string]interface{}{"Publications": publications}))
 	}
 }
+
+func OrderBorrow(w http.ResponseWriter, r *http.Request) {
+	postData, err := tools.GetPostBody(w, r)
+	// 鉴权
+	ok, err := authorizeLibrarian(r)
+	if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+		return
+	} else if !ok {
+		w.Write(tools.ApiReturn(1, "权限不足", nil))
+		return
+	}
+	orderItem := &data.OrderItem{
+		OrderItemID: int64(postData["OrderItemID"].(float64)),
+	}
+	err = orderItem.Borrow()
+	if err != nil && err.Error() == my_error.BorrowOutOfTimeError.Error() {
+		w.Write(tools.ApiReturn(1, "有超期图书未归还", nil))
+	} else if err != nil && err.Error() == my_error.MaxBorrowNumberError.Error() {
+		w.Write(tools.ApiReturn(1, "超出借阅上限", nil))
+	} else if err != nil && err.Error() == my_error.InventoryNotEnoughError.Error() {
+		w.Write(tools.ApiReturn(1, "库存不足", nil))
+	} else if err != nil {
+		w.Write(tools.ApiReturn(1, "服务器错误", nil))
+	} else {
+		w.Write(tools.ApiReturn(0, "借阅成功", nil))
+	}
+}

@@ -43,6 +43,7 @@ func main() {
 	http.HandleFunc("/api/administrator_get_publication_by_name", controller.AdministratorGetPublicationByName)
 	http.HandleFunc("/api/get_borrower_message", controller.GetBorrowerMessage)
 	http.HandleFunc("/api/librarian_get_publication_by_name", controller.LibrarianGetPublicationByName)
+	http.HandleFunc("/api/order_borrow", controller.OrderBorrow)
 
 	server.ListenAndServe()
 }
