@@ -155,3 +155,12 @@ func (borrowItem *BorrowItem) GetPrice() (err error) {
 	err = Db.QueryRow(statement, borrowItem.BorrowItemID).Scan(&borrowItem.Publication.Price)
 	return
 }
+
+func (borrowItem *BorrowItem) Lost() (err error) {
+	statement := `UPDATE BorrowItem b 
+    			  JOIN Publication p ON b.publicationID=p.publicationID
+    			  SET b.status=2, p.total=p.total-1
+				  WHERE b.borrowItemID=?`
+	_, err = Db.Exec(statement, borrowItem.BorrowItemID)
+	return
+}

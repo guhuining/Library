@@ -37,6 +37,7 @@ $(document).ready(function (){
                                 <td>` + element["Name"] + `</td>
                                 <td>` + element["Author"] + `</td>
                                 <td><a href="javascript:void(0)" onclick="returnPublication(this)">归还</a></td>
+                                <td><a href="javascript:void(0)" onclick="lostPublication(this)">丢失</a></td>
                             </tr>
                             `
                     });
@@ -92,6 +93,51 @@ function returnPublication(element) {
     $.ajax({
         type: "POST",
         url: "/api/return_publication",
+        async: false,
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify(Data),
+        dataType: "json",
+        success: function (data){
+            $(element).parents("tr").remove();
+            alert(data["msg"]);
+        },
+        error: function (message){
+            alert("error");
+        }
+    });
+}
+
+// 丢失
+function lostPublication(element) {
+    let Data = {
+        "BorrowItemID": parseInt($(element).parents("tr").children("input").val())
+    };
+    let fine = 0;
+    //查询图书价格
+    $.ajax({
+        type: "POST",
+        url: "/api/get_price",
+        async: false,
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify(Data),
+        dataType: "json",
+        success: function (data) {
+            if (data["code"] === 0) {
+                fine = data["data"]["Price"];
+            }
+        },
+        error: function (message) {
+            alert("error")
+        }
+    })
+    let fined = confirm("需缴纳丢失罚款" + fine + "元")
+    if (!fined) {
+        return
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/api/lost",
         async: false,
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify(Data),
