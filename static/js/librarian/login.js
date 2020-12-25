@@ -17,7 +17,7 @@ $(document).ready(function(){
             dataType: "json",
             success: function (data) {
                 if(data["code"] === 0) {
-                    window.location.replace("/librarian/login.html");
+                    window.location.replace("/librarian/lend_publication.html");
                 } else {
                     alert(data["msg"])
                 }
