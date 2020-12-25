@@ -118,7 +118,9 @@ func (borrowItem *BorrowItem) GetFine() (err error) {
 // @param	BorrowItemID	BorrowItem.BorrowItemID	借阅订单ID
 func (borrowItem *BorrowItem) Return() (err error) {
 	statement := `UPDATE BorrowItem JOIN Card ON BorrowItem.cardNO = Card.cardNO 
-				  SET status = 1, Card.currentBorrowNumber = Card.currentBorrowNumber - 1, dueDate = NOW() 
+				  JOIN Publication ON BorrowItem.publicationID = Publication.publicationID
+				  SET status = 1, Card.currentBorrowNumber = Card.currentBorrowNumber - 1, dueDate = NOW(), 
+				      Publication.inventory=Publication.inventory+1
 				  WHERE BorrowItem.BorrowItemID = ? AND status = 0`
 	_, err = Db.Query(statement, borrowItem.BorrowItemID)
 	return
