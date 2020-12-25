@@ -14,7 +14,7 @@ $(document).ready(function(){
                 $("#IsLogin").html(h)
             } else {
                 let h = `
-                <a id ="Login" href="/administrator/login.html">登录</a>
+                <li><a id ="Login" href="/administrator/login.html">登录</a></li>
                 `
                 $("#IsLogin").html(h)
             }
