@@ -9,7 +9,7 @@ $(document).ready(function(){
         success: function (data) {
             if(data["code"] === 0) {
                 let h = `
-                <a id="Logout" href="javascript:void(0)" onclick="Logout()">退出</a>
+                <li><a id="Logout" href="javascript:void(0)" onclick="Logout()">退出</a></li>>
                 `
                 $("#IsLogin").html(h)
             } else {
