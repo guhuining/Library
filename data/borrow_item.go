@@ -147,3 +147,11 @@ func (borrowItem *BorrowItem) GetBorrowItem() (results []BorrowItem, err error) 
 	}
 	return
 }
+
+func (borrowItem *BorrowItem) GetPrice() (err error) {
+	statement := `SELECT price FROM BorrowItem b 
+    			  JOIN Publication p ON b.publicationID=p.publicationID
+    			  WHERE b.borrowItemID=?`
+	err = Db.QueryRow(statement, borrowItem.BorrowItemID).Scan(&borrowItem.Publication.Price)
+	return
+}
